@@ -1,26 +1,34 @@
-import { Component } from '@angular/core';
-import { Article } from './article.model'; // <-- import this
+import { Component, OnInit, HostBinding, Input } from '@angular/core'; //import Input
+import { Article } from './article.model'; //import article
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-article',
+  templateUrl: './article.component.html',
+  styleUrls: ['./article.component.css']
 })
-export class AppComponent {
-  articles:Article[];   // <-- component property
-  constructor(){
-    this.articles = [
-      new Article('Angular 2', 'http://angular.io', 3),
-      new Article('Fullstack', 'http://fullstack.io', 2),
-      new Article('Angular Homepage', 'http://angular.io', 1),
-    ];
+export class ArticleComponent implements OnInit {
+  @HostBinding('attr.class') cssClass = 'card';
+  @Input() article:Article
+
+  constructor() {
+    this.article = new Article('Angular 2','http://angular.io',10);
   }
 
-  addArticle(title: HTMLInputElement, link: HTMLInputElement): boolean {
-    this.articles.push(new Article('Angular 2', 'http://angular.io', 3));
+
+  voteUp(): Boolean {
+    this.article.voteUp();
     return false;
   }
+
+  voteDown():Boolean {
+    this.article.voteDown();
+    return false; 
+  }
+
+  ngOnInit() {}
 }
+
+
 
 
 
